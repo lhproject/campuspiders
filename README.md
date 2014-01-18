@@ -12,7 +12,10 @@
 
 ## 覆盖范围
 
-* [江南大学教务处首页](http://jw.jiangnan.edu.cn/)上的文章链接
+如无说明, 都默认为只爬取首页上的链接, 不深入各栏目内.
+
+* [江南大学教务处](http://jw.jiangnan.edu.cn/)
+* [江南大学新闻网](http://xinwen.jiangnan.edu.cn/)
 
 
 ## 授权
