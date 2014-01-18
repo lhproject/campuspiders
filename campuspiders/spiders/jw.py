@@ -10,8 +10,9 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import Selector
 
-from ..items import JWNewsItem
+from ..items import NewsItem
 
+SOURCE_ID_JW = 'jw'
 NEWSINFO_METADATA_RE = re.compile(
         r'发布：(?P<publisher>[^ ]+)'
         r'\s+时间：\[(?P<y>\d+)-(?P<m>\d+)-(?P<d>\d+)\]'
@@ -36,9 +37,10 @@ class JWNewsSpider(CrawlSpider):
 
     def parse_news_item_NewsInfo(self, response):
         sel = Selector(response)
-        news = JWNewsItem()
+        news = NewsItem()
 
         news['url'] = response.url
+        news['source'] = SOURCE_ID_JW
         news['title'] = ''.join(sel.xpath('/html/body/table[3]/tbody/tr/td/table[2]/tbody/tr[2]/td/table[4]/tr/td/strong/text()').extract())
 
         content = ''.join(sel.xpath('/html/body/table[3]/tbody/tr/td/table[2]/tbody/tr[2]/td/table[4]/tr[2]/td//text()').extract())
@@ -59,9 +61,10 @@ class JWNewsSpider(CrawlSpider):
 
     def parse_news_item_ViewInfo(self, response):
         sel = Selector(response)
-        news = JWNewsItem()
+        news = NewsItem()
 
         news['url'] = response.url
+        news['source'] = SOURCE_ID_JW
         news['title'] = ''.join(sel.xpath('/html/body/table[4]/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td[2]/div/b/text()').extract())
 
         content = ''.join(sel.xpath('/html/body/table[4]/tr/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table[2]/tr/td//text()').extract())

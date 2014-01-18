@@ -5,13 +5,14 @@
 
 from scrapy.item import Item, Field
 
-class JWNewsItem(Item):
+class NewsItem(Item):
     title = Field()
     ctime = Field()
     content = Field()
     author = Field()
     publisher = Field()
     url = Field()
+    source = Field()
 
 
 # vim:set ai et ts=4 sw=4 sts=4 fenc=utf-8:
