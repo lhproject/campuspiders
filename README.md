@@ -14,6 +14,14 @@
 
 如无说明, 都默认为只爬取首页上的链接, 不深入各栏目内.
 
+
+### 院系
+
+* [江南大学数字媒体学院](http://dm.jiangnan.edu.cn/cn/)
+
+
+### 党群/行政机构
+
 * [江南大学教务处](http://jw.jiangnan.edu.cn/)
 * [江南大学新闻网](http://xinwen.jiangnan.edu.cn/)
 
