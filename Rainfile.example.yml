@@ -1,0 +1,46 @@
+site:
+  $$nodup: true
+
+  # XXX 这里必须和落花配置成一样, 否则登陆会话不能共享
+  session:
+    backend: redis
+    options:
+      struct_id: luohua.session
+      cookie-key: lh_s
+      secret: '7h1z_must_13e_s3cr37'
+      ttl: 300
+
+  middlewares:
+    pre:
+      - session
+    post:
+      - session
+
+
+# 数据库配置
+# NOTE: 这个显然带 luohua. 前缀的项必须和落花的配置保持一致, 否则不能共享
+# 用户认证数据库了
+weiyu.db:
+  databases:
+    main-kv:
+      driver: riak
+      # HTTP protocol used in case debugging needs sniffing raw packets
+      nodes:
+        -
+          host: 127.0.0.1
+          http_port: 10018
+          pb_port: 10017
+    mem-kv:
+      driver: redis
+      host: 127.0.0.1
+      port: 6379
+
+  storage:
+    luohua.user: main-kv/users
+    luohua.role: main-kv/roles
+    luohua.session: mem-kv/(int)0
+
+    campuspiders.news: mem-kv/(int)1
+
+
+# vim:set ai et ts=2 sw=2 sts=2 fenc=utf=8:

@@ -43,3 +43,6 @@ pip-log.txt
 
 # development virtualenvs
 venv/
+
+# site config file
+Rainfile.yml
