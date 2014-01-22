@@ -13,6 +13,8 @@ import time
 
 from weiyu.db.mapper.base import Document
 
+_number_types = tuple([float] + list(six.integer_types))
+
 NEWS_ITEM_STRUCT_ID = 'campuspiders.news'
 
 DATE_INDEX_ZSET_KEY = 'idx:date'
@@ -71,7 +73,7 @@ class NewsItemRecord(Document):
             pipeline = conn.pipeline()
 
             # 记录本体
-            pipeline.hmput(new_id, self.encode())
+            pipeline.hmset(new_id, self.encode())
             pipeline.expire(new_id, ITEM_CACHE_DURATION)
 
             # 时序索引
@@ -99,27 +101,27 @@ class NewsItemRecord(Document):
 
 
 @NewsItemRecord.decoder(1)
-def news_item_dec_v1(self, data):
+def news_item_dec_v1(data):
     return {
             'source': data['src'],
             'url': data['url'],
-            'ctime': int(data['ctm']),
-            'fetch_time': int(data['fet']),
+            'ctime': data['ctm'],
+            'fetch_time': data['fet'],
             'title': data['title'],
             'content': data['cnt'],
             }
 
 
 @NewsItemRecord.encoder(1)
-def news_item_enc_v1(self, item):
+def news_item_enc_v1(item):
     assert 'source' in item
     assert isinstance(item['source'], six.text_type)
     assert 'url' in item
     assert isinstance(item['url'], six.text_type)
     assert 'ctime' in item
-    assert isinstance(item['ctime'], six.integer_types)
+    assert isinstance(item['ctime'], _number_types)
     assert 'fetch_time' in item
-    assert isinstance(item['fetch_time'], six.integer_types)
+    assert isinstance(item['fetch_time'], _number_types)
     assert 'title' in item
     assert isinstance(item['title'], six.text_type)
     assert 'content' in item
