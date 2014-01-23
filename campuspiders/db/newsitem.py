@@ -18,6 +18,7 @@ _number_types = tuple([float] + list(six.integer_types))
 NEWS_ITEM_STRUCT_ID = 'campuspiders.news'
 
 DATE_INDEX_ZSET_KEY = 'idx:date'
+FETCH_TIME_INDEX_ZSET_KEY = 'idx:fetched'
 ITEM_KEY_FORMAT = 'item:%s:%s'
 
 # TODO: 这个要不要移到 Rainfile 配置里?
@@ -70,16 +71,14 @@ class NewsItemRecord(Document):
         new_id = gen_item_id(self)
 
         with self.storage as conn:
-            pipeline = conn.pipeline()
+            with conn.pipeline() as pipeline:
+                # 记录本体
+                pipeline.hmset(new_id, self.encode())
+                pipeline.expire(new_id, ITEM_CACHE_DURATION)
 
-            # 记录本体
-            pipeline.hmset(new_id, self.encode())
-            pipeline.expire(new_id, ITEM_CACHE_DURATION)
-
-            # 时序索引
-            pipeline.zadd(DATE_INDEX_ZSET_KEY, self['ctime'], new_id)
-
-            pipeline.execute()
+                # 时序索引
+                pipeline.zadd(DATE_INDEX_ZSET_KEY, self['ctime'], new_id)
+                pipeline.zadd(FETCH_TIME_INDEX_ZSET_KEY, time.time(), new_id)
 
         self['id'] = new_id
 
@@ -88,16 +87,18 @@ class NewsItemRecord(Document):
         '''从时序索引中删去已经失效的项.'''
 
         with cls.storage as conn:
-            curtime = int(time.time())
-            expire_time = curtime - ITEM_CACHE_DURATION
+            expire_time = time.time() - ITEM_CACHE_DURATION
 
             # 删掉权重 (时间戳) 小于 (早于) 当前时间减去存活时间的索引记录
             # 文档不用管, 当然消失了
-            return conn.zremrangebyscore(
-                    DATE_INDEX_ZSET_KEY,
+            gone_ids = conn.zrangebyscore(
+                    FETCH_TIME_INDEX_ZSET_KEY,
                     '-inf',
                     expire_time,
                     )
+            with conn.pipeline() as pipeline:
+                pipeline.zrem(FETCH_TIME_INDEX_ZSET_KEY, gone_ids)
+                pipeline.zren(DATE_INDEX_ZSET_KEY, gone_ids)
 
 
 @NewsItemRecord.decoder(1)
