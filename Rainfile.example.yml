@@ -16,6 +16,12 @@ site:
     post:
       - session
 
+  views:
+    package: campuspiders.app
+    modules:
+      - .v1.feed
+      - .v1.admin
+
 
 # 数据库配置
 # NOTE: 这个显然带 luohua. 前缀的项必须和落花的配置保持一致, 否则不能共享

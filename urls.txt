@@ -1,0 +1,13 @@
+--exact
+--default-type=regex
+--renderer=json
+
+/v1/:
+    ^feed/:
+        ^week/$ feed-one-week-v1
+
+	^admin/:
+		^ping/$ admin-ping-v1
+
+
+# vim:set ai et ts=4 sw=4 sts=4 fenc=utf-8 syn=weiyu-urls:
