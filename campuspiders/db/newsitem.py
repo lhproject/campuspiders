@@ -63,6 +63,8 @@ class NewsItemRecord(Document):
 
                 # 直接返回 decode 出来的裸 dict, 因为这个功能设计出来数据就
                 # 不是供修改的, 就没必要拿这个 Document 包一层了
+                # XXX: 不过微雨数据的版本字段需要先变成整数, 先这么着吧
+                obj['_V'] = int(obj['_V'])
                 yield cls.decode(obj)
 
     def save(self):
