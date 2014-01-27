@@ -80,6 +80,8 @@ class NewsItemRecord(Document):
                 pipeline.zadd(DATE_INDEX_ZSET_KEY, self['ctime'], new_id)
                 pipeline.zadd(FETCH_TIME_INDEX_ZSET_KEY, time.time(), new_id)
 
+                pipeline.execute()
+
         self['id'] = new_id
 
     @classmethod
@@ -98,7 +100,9 @@ class NewsItemRecord(Document):
                     )
             with conn.pipeline() as pipeline:
                 pipeline.zrem(FETCH_TIME_INDEX_ZSET_KEY, gone_ids)
-                pipeline.zren(DATE_INDEX_ZSET_KEY, gone_ids)
+                pipeline.zrem(DATE_INDEX_ZSET_KEY, gone_ids)
+
+                pipeline.execute()
 
 
 @NewsItemRecord.decoder(1)
