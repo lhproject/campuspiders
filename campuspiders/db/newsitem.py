@@ -112,8 +112,8 @@ def news_item_dec_v1(data):
     return {
             'source': data['src'],
             'url': data['url'],
-            'ctime': data['ctm'],
-            'fetch_time': data['fet'],
+            'ctime': float(data['ctm']),
+            'fetch_time': float(data['fet']),
             'title': data['title'],
             'content': data['cnt'],
             }
