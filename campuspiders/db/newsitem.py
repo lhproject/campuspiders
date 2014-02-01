@@ -101,8 +101,8 @@ class NewsItemRecord(Document):
                     expire_time,
                     )
             with conn.pipeline() as pipeline:
-                pipeline.zrem(FETCH_TIME_INDEX_ZSET_KEY, gone_ids)
-                pipeline.zrem(DATE_INDEX_ZSET_KEY, gone_ids)
+                pipeline.zrem(FETCH_TIME_INDEX_ZSET_KEY, *gone_ids)
+                pipeline.zrem(DATE_INDEX_ZSET_KEY, *gone_ids)
 
                 pipeline.execute()
 
