@@ -5,6 +5,7 @@
 /v1/:
     ^feed/:
         ^week/$ feed-one-week-v1
+        ^month/$ feed-one-month-v1
 
 	^admin/:
 		^ping/$ admin-ping-v1

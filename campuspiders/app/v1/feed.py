@@ -13,16 +13,28 @@ from luohua.utils.viewhelpers import jsonreply
 from ...db.newsitem import NewsItemRecord
 
 ONE_WEEK = 7 * 86400
+ONE_MONTH = 30 * 86400
+
+
+def _get_recent_feed_item_view(duration):
+    curtime = int(time.time())
+    items = list(NewsItemRecord.get_recent_items(curtime - duration))
+
+    return jsonreply(r=0, l=items)
 
 
 @http
 @jsonview
 @only_methods(['GET', ])
 def feed_one_week_v1_view(request):
-    curtime = int(time.time())
-    items = list(NewsItemRecord.get_recent_items(curtime - ONE_WEEK))
+    return _get_recent_feed_item_view(ONE_WEEK)
 
-    return jsonreply(r=0, l=items)
+
+@http
+@jsonview
+@only_methods(['GET', ])
+def feed_one_month_v1_view(request):
+    return _get_recent_feed_item_view(ONE_MONTH)
 
 
 # vim:set ai et ts=4 sw=4 sts=4 fenc=utf-8:
