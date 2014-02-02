@@ -9,5 +9,8 @@
 	^admin/:
 		^ping/$ admin-ping-v1
 
+/g/:
+    ^(?P<short_url>[0-9A-Za-z]+)/?$ shorturl-goto dummy
+
 
 # vim:set ai et ts=4 sw=4 sts=4 fenc=utf-8 syn=weiyu-urls:

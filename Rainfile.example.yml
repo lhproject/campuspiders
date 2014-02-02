@@ -21,6 +21,7 @@ site:
     modules:
       - .v1.feed
       - .v1.admin
+      - .common.shorturl
 
 
 # 数据库配置
@@ -46,7 +47,7 @@ weiyu.db:
     luohua.role: main-kv/roles
     luohua.session: mem-kv/(int)0
 
-    campuspiders.news: mem-kv/(int)1
+    campuspiders.news: mem-kv/(int)10
 
 
 # vim:set ai et ts=2 sw=2 sts=2 fenc=utf=8:
