@@ -6,7 +6,7 @@ from __future__ import unicode_literals, division
 import time
 
 from weiyu.shortcuts import http, jsonview
-from weiyu.utils.decorators import only_methods
+from weiyu.utils.decorators import only_methods, cors
 
 from luohua.utils.viewhelpers import jsonreply
 
@@ -24,6 +24,7 @@ def _get_recent_feed_item_view(duration):
 
 
 @http
+@cors
 @jsonview
 @only_methods(['GET', ])
 def feed_one_week_v1_view(request):
@@ -31,6 +32,7 @@ def feed_one_week_v1_view(request):
 
 
 @http
+@cors
 @jsonview
 @only_methods(['GET', ])
 def feed_one_month_v1_view(request):
