@@ -50,3 +50,6 @@ Rainfile.yml
 # suggested name of entry point file
 # this may contain modifications to loader parameters
 main.py
+
+# Celery config file
+campuspiders/tasks/celery.py
