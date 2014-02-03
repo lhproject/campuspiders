@@ -46,3 +46,7 @@ venv/
 
 # site config file
 Rainfile.yml
+
+# suggested name of entry point file
+# this may contain modifications to loader parameters
+main.py
