@@ -7,7 +7,7 @@ from scrapy import signals
 from scrapy.exceptions import NotConfigured
 
 # NOTE: 这一行导入会间接给微雨框架加载配置文件
-from ..task import newsitem
+from ..tasks import newsitem
 
 
 class DBMaintenance(object):
