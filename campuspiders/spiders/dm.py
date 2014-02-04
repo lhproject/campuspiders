@@ -10,6 +10,7 @@ from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 from scrapy.selector import Selector
 
+from ..utils.helpers import strptime_helper, normalize_content
 from ..items import NewsItem
 from ..linkextractors.dm import DMHomepageLinkExtractor
 
@@ -18,16 +19,6 @@ from ..linkextractors.dm import DMHomepageLinkExtractor
 SOURCE_ID_DM = 'dm'
 
 # TODO: 直接解析 time 标签里的机器可读时间戳
-CTIME_RE = re.compile('(\d+).(\d+).(\d+)\s+(\d+):(\d+):(\d+)')
-
-
-def make_ctime_from_str(s):
-    match = CTIME_RE.search(s)
-    if match is None:
-        raise ValueError('unexpected ctime string format')
-
-    y, m, d, h, i, s = [int(i) for i in match.groups()]
-    return time.mktime((y, m, d, h, i, s, 0, 0, 0, ))
 
 
 class DMNewsSpider(CrawlSpider):
@@ -44,18 +35,15 @@ class DMNewsSpider(CrawlSpider):
 
         news['url'] = response.url
         news['source'] = SOURCE_ID_DM
-        news['title'] = sel.xpath("//h1[@class='title']/text()").extract()[0]
+        news['title'] = sel.css('h1.title::text').extract()[0]
 
-        content_elem = sel.css(".cms_article>:not(header)")
-        content = ''.join(content_elem.extract())
-        content = content.replace('\r\n', '\n')
-        content = content.replace('\xa0', ' ')
-        news['content'] = content
+        content_elem = sel.css('.cms_article>:not(header)')
+        news['content'] = normalize_content(content_elem.extract())
 
-        #news['author'] = sel.xpath("//span[@class='author']/text()").extract()[0].strip()
+        #news['author'] = sel.css('span.author::text').extract()[0].strip()
         news['author'] = '未知'
         news['publisher'] = ''
-        news['ctime'] = make_ctime_from_str(sel.xpath("//time[@class='pubtime']/text()").extract()[0])
+        news['ctime'] = strptime_helper(sel.css('time.pubtime::text').extract()[0], '%Y.%m.%d %H:%M:%S')
 
         return news
 
