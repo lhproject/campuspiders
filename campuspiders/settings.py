@@ -23,4 +23,12 @@ ITEM_PIPELINES = {
         }
 
 
+# 一定要打开, 否则数据库索引和短链不会更新
+EXTENSIONS = {
+        'campuspiders.ext.postproc.DBMaintenance': 500,
+        }
+
+DB_MAINTENANCE_ENABLED = True
+
+
 # vim:set ai et ts=4 sw=4 sts=4 fenc=utf-8:
