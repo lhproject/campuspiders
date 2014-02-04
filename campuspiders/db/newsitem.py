@@ -128,6 +128,16 @@ class NewsItemRecord(Document):
                     '-inf',
                     expire_time,
                     )
+
+            if not gone_ids:
+                # 一条要清理的记录都没有, 不要继续了
+                # 否则会造成 ZREM 命令语法错误
+                #
+                #     ResponseError: Command # 1 (ZREM idx:fetched) of pipeline
+                #     caused error: wrong number of arguments for 'zrem'
+                #     command
+                return
+
             with conn.pipeline() as pipeline:
                 pipeline.zrem(FETCH_TIME_INDEX_ZSET_KEY, *gone_ids)
                 pipeline.zrem(DATE_INDEX_ZSET_KEY, *gone_ids)
