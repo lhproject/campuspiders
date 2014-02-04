@@ -6,6 +6,7 @@ from __future__ import unicode_literals, division
 __all__ = [
         'add_item',
         'clean_index',
+        'update_short_urls',
         ]
 
 from .celery import app
@@ -29,6 +30,13 @@ def add_item(item, timestamp):
 @app.task(serializer='json')
 def clean_index():
     NewsItemRecord.purge_old_index()
+
+    return True
+
+
+@app.task(serializer='json')
+def update_short_urls():
+    NewsItemRecord.update_short_urls()
 
     return True
 
