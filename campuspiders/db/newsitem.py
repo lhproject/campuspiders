@@ -73,6 +73,10 @@ class NewsItemRecord(Document):
             for item_id in ids:
                 obj = conn.hgetall(item_id)
 
+                # 如果对象过期了就直接进行下一个
+                if obj is None:
+                    continue
+
                 # 直接返回 decode 出来的裸 dict, 因为这个功能设计出来数据就
                 # 不是供修改的, 就没必要拿这个 Document 包一层了
                 # XXX: 不过微雨数据的版本字段需要先变成整数, 先这么着吧
