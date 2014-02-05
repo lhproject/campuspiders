@@ -23,7 +23,10 @@
 ### 党群/行政机构
 
 * [江南大学教务处](http://jw.jiangnan.edu.cn/)
-* [江南大学新闻网](http://xinwen.jiangnan.edu.cn/)
+* [江南大学新闻网](http://xinwen.jiangnan.edu.cn/)的信息公告栏目
+* [江南大学就业信息网](http://scc.jiangnan.edu.cn/)
+* [江南大学研究生院](http://gs.jiangnan.edu.cn/)
+* [江南大学信息化建设与管理中心](http://nic.jiangnan.edu.cn/)的通知公告栏目
 
 
 ## 部署方法
