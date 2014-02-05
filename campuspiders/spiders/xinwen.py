@@ -19,9 +19,9 @@ SOURCE_ID_XINWEN = 'xinwen'
 class XinwenNewsSpider(CrawlSpider):
     name = 'xinwen'
     allowed_domains = ['xinwen.jiangnan.edu.cn', ]
-    start_urls = ['http://xinwen.jiangnan.edu.cn/', ]
+    start_urls = ['http://xinwen.jiangnan.edu.cn/info/', ]
     rules = [
-            Rule(SgmlLinkExtractor(allow=[r'/[A-Za-z]+/\d+/\d+/\d+.html']), 'parse_news_item'),
+            Rule(SgmlLinkExtractor(allow=[r'/info/\d+/\d+/\d+.html']), 'parse_news_item'),
             ]
 
     def parse_news_item(self, response):
