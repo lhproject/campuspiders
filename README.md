@@ -28,6 +28,7 @@
 * [江南大学研究生院](http://gs.jiangnan.edu.cn/)
 * [江南大学信息化建设与管理中心](http://nic.jiangnan.edu.cn/)的通知公告栏目
 * [江南大学后勤管理处](http://hqc.jiangnan.edu.cn/)的通知公告栏目
+* [江南大学保卫处](http://bwch.jiangnan.edu.cn/)的通知公告栏目
 
 
 ## 部署方法
