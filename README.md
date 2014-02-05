@@ -26,6 +26,7 @@
 * [江南大学新闻网](http://xinwen.jiangnan.edu.cn/)的信息公告栏目
 * [江南大学就业信息网](http://scc.jiangnan.edu.cn/)
 * [江南大学研究生院](http://gs.jiangnan.edu.cn/)
+* [江南大学后勤信息网](http://hq.jiangnan.edu.cn/)通知公告栏目的站内新闻, 不包括外链内容 (已由对应相关站点的爬虫负责)
 * [江南大学信息化建设与管理中心](http://nic.jiangnan.edu.cn/)的通知公告栏目
 * [江南大学后勤管理处](http://hqc.jiangnan.edu.cn/)的通知公告栏目
 * [江南大学保卫处](http://bwch.jiangnan.edu.cn/)的通知公告栏目
