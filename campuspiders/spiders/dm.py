@@ -37,7 +37,7 @@ class DMNewsSpider(CrawlSpider):
         news['source'] = SOURCE_ID_DM
         news['title'] = sel.css('h1.title::text').extract()[0]
 
-        content_elem = sel.css('.cms_article>:not(header)')
+        content_elem = sel.css('.cms_article>:not(header) ::text')
         news['content'] = normalize_content(content_elem.extract())
 
         #news['author'] = sel.css('span.author::text').extract()[0].strip()
